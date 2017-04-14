@@ -1,0 +1,7 @@
+# doxygen build script
+
+Import('genv')
+
+env = Environment(tools=['default', 'doxygen'], toolpath='..')
+docs = env.Doxygen('doxygen_cfg')
+

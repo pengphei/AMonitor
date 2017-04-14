@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+# lib building script
+#
+
+Import('genv')
+
+lib_files = []
+
+# unqlite script
+unqlite_script = 'unqlite/SConscript'
+unqlite_files = genv.SConscript(unqlite_script)
+lib_files += [unqlite_files]
+
+# cJSON script
+cjson_script = 'cJSON/SConscript'
+cjson_files = genv.SConscript(cjson_script)
+lib_files += [cjson_files]
+
+# nanomsg script
+nanomsg_script = 'nanomsg/SConscript.nanomsg'
+nanomsg_files = genv.SConscript(nanomsg_script)
+lib_files += [nanomsg_files]
+
+Return("lib_files")

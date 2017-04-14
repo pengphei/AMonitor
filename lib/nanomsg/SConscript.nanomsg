@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# @file SConscript
+# @brief main building script
+# @author Han Pengfei <hanpengfei@autobio.com.cn>
+#
+
+Import('genv')
+
+nanomsg_files = []
+
+inc_files = [
+    "src/bus.h", 
+    "src/inproc.h", 
+    "src/ipc.h", 
+    "src/nn.h", 
+    "src/pair.h",
+    "src/pipeline.h",
+    "src/protocol.h",
+    "src/pubsub.h",
+    "src/reqrep.h",
+    "src/survey.h",
+    "src/tcp.h",
+    "src/transport.h",
+    "src/ws.h",
+]
+
+genv.Install(genv["include"]+"/nanomsg", inc_files)
+
+src_script = "src/SConscript"
+nanomsg_files += genv.SConscript(src_script)
+
+Return("nanomsg_files")
+
+

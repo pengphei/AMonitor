@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+# nanomsg nanocat building script
+#
+
+import time
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+
+env["CFLAGS"] += [
+    "-DNN_STATIC_LIB"
+]
+
+env["LIBPATH"] = [
+    genv["out"],
+]
+
+env["CCFLAGS"] = [
+    "-O3",
+    "-g",
+    "-Wno-unused-value",
+    "-Wno-unused-parameter",
+]
+
+env["LINKFLAGS"] = [
+]
+
+dst = "nanocat"
+
+inc = [
+    ".",
+    "../src",
+]
+
+src = [
+    "nanocat.c",
+    "options.c",
+]
+
+lib = [
+    "nanomsg",
+    "pthread",
+]
+
+prog = env.Program(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("prog")

@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+# lib building script
+#
+
+Import('genv')
+
+lib_files = []
+
+# nanomsg script
+nanomsg_script = 'SConscript.nanomsg'
+nanomsg_files = genv.SConscript(nanomsg_script)
+genv.Install(genv["out"], nanomsg_files)
+
+# extra script
+#extra_script = 'SConscript.extra'
+#extra_files = genv.SConscript(extra_script)
+#genv.Install(genv["out"], extra_files)

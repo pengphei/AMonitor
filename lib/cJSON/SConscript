@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+# cJSON building script
+#
+
+import os
+
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+env["BUILD_PLATFORM"] = genv["BUILD_PLATFORM"]
+
+env["CCFLAGS"] = [
+    "-std=c89",
+    "-pedantic", 
+    "-Wall",
+    "-Werror", 
+    "-Wstrict-prototypes",
+    "-Wwrite-strings", 
+    "-Wshadow",
+    "-Winit-self", 
+    "-Wcast-align", 
+    "-Wformat=2", 
+    "-Wmissing-prototypes", 
+    "-Wstrict-overflow=2", 
+    "-Wcast-qual", 
+    "-Wc++-compat", 
+    "-Wundef", 
+    "-Wswitch-default", 
+    "-Wconversion", 
+]
+
+dst = "cjson"
+
+inc = [
+    ".",
+]
+
+src = [
+    "cJSON.c",
+    "cJSON_Utils.c"
+]
+
+lib = ["m"]
+
+cjson_static = env.StaticLibrary(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("cjson_static")

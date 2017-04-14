@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+# @file SConscript
+# @brief extra building script
+# @author Han Pengfei <hanpengfei@autobio.com.cn>
+#
+
+Import('genv')
+
+nanomsg_files = []
+
+tools_script = "tools/SConscript"
+nanomsg_files += genv.SConscript(tools_script)
+
+tests_script = "tests/SConscript"
+nanomsg_files += genv.SConscript(tests_script)
+
+demo_script = "demo/SConscript"
+nanomsg_files += genv.SConscript(demo_script)
+
+Return("nanomsg_files")
+
+

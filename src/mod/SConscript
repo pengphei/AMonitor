@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+# mod building script
+#
+
+import time
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+
+env["CFLAGS"] += [
+]
+
+env["LIBPATH"] = [
+    genv["out"],
+]
+
+env["CCFLAGS"] = [
+    "-O3",
+    "-g",
+    "-Wno-unused-value",
+    "-Wno-unused-parameter",
+]
+
+env["LINKFLAGS"] = [
+]
+
+inc = [
+    ".",
+    "..",
+]
+
+srcs = [
+    "mod_sample.cpp",
+    "mod_monitor.cpp",
+    "mod_can.cpp",
+    "mod_gpio.cpp",
+    "mod_i2c.cpp",
+    "mod_system.cpp",
+    "mod_uart.cpp",
+    "mod_bt.cpp",
+    "mod_wifi.cpp",
+]
+
+lib = [
+    "pthread",
+    "stdc++",
+]
+
+mod_libs = []
+
+for src in srcs:
+    mod = env.SharedLibrary(source=src, LIBS=lib, CPPPATH=inc)
+    mod_libs += [mod]
+Return("mod_libs")
