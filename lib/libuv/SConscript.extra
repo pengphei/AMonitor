@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+# @file SConscript
+# @brief extra building script
+# @author Han Pengfei <pengphei@sina.com>
+#
+
+Import('genv')
+
+extra_files = []
+
+tests_script = "test/SConscript"
+extra_files += genv.SConscript(tests_script)
+
+samples_script = "samples/socks5-proxy/SConscript"
+extra_files += genv.SConscript(samples_script)
+
+Return("extra_files")
+
+

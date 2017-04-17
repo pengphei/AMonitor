@@ -15,9 +15,9 @@ build_mode = ARGUMENTS.get('build-mode', "debug")
 # 检查配置文件是否存在，提醒构建注意
 tools_config = "tools.ini"
 if not os.path.exists(tools_config):
-    tools_config = "doc/tools.ini"
+    tools_config = "docs/tools.ini"
     print(u"#############################################")
-    print(u"tools.ini配置文件不存在，默认使用 doc/tools.ini")
+    print(u"tools.ini配置文件不存在，默认使用 docs/tools.ini")
     print(u"请根据自己的环境在当前目录创建 tools.ini 文件")
     print(u"#############################################")
 
@@ -58,7 +58,7 @@ Export("genv")
 
 # 如果指定构建文档，则构建代码文档
 if '1' == genv["BUILD_DOC"]:
-    doc_script = "doc/SConscript"
+    doc_script = "docs/SConscript"
     genv.SConscript(doc_script)
 else:
     # 构建整个项目

@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+# @file SConscript
+# @brief main building script
+# @author Han Pengfei <pengphei@sina.cn>
+#
+
+Import('genv')
+
+src_files = []
+
+src_script = "src/SConscript.linux"
+src_files += genv.SConscript(src_script)
+
+Return("src_files")
+
+

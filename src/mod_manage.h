@@ -3,8 +3,9 @@
 
 #include <stdint.h>
 #include <sys/types.h>
+#include "mod_def.h"
 
-int mod_man_init();
+int mod_man_init(char* exe_path);
 int mod_man_append();
 int mod_man_check();
 int mod_man_process();

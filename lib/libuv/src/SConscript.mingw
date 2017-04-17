@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+# uv lib building script
+#
+
+import os
+
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+env["BUILD_PLATFORM"] = genv["BUILD_PLATFORM"]
+
+env["CCFLAGS"] = [
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter",
+    "-DWIN32_LEAN_AND_MEAN",
+    "-D_WIN32_WINNT=0x0600",
+]
+
+dst = "uv"
+
+inc = [
+    ".",
+    "win",
+    "../include",
+]
+
+src_mingw = [
+    "win/async.c",
+    "win/core.c",
+    "win/detect-wakeup.c",
+    "win/dl.c",
+    "win/error.c",
+    "win/fs-event.c",
+    "win/fs.c",
+    "win/getaddrinfo.c",
+    "win/getnameinfo.c",
+    "win/handle.c",
+    "win/loop-watcher.c",
+    "win/pipe.c",
+    "win/poll.c",
+    "win/process-stdio.c",
+    "win/process.c",
+    "win/req.c",
+    "win/signal.c",
+    "win/stream.c",
+    "win/tcp.c",
+    "win/thread.c",
+    "win/timer.c",
+    "win/tty.c",
+    "win/udp.c",
+    "win/util.c",
+    "win/winapi.c",
+    "win/winsock.c",
+]
+
+src = [
+    # utils
+    "fs-poll.c",
+    "inet.c",
+    "threadpool.c",
+    "uv-common.c",
+    "version.c", 
+]
+src += src_mingw
+
+lib = ["ws2_32", "psapi", "phlpapi", "shell32", "userenv", "user32", "dl","pthread","rt"]
+
+uv_static = env.StaticLibrary(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("uv_static")

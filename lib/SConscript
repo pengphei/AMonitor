@@ -21,4 +21,9 @@ nanomsg_script = 'nanomsg/SConscript.nanomsg'
 nanomsg_files = genv.SConscript(nanomsg_script)
 lib_files += [nanomsg_files]
 
+# uv script
+uv_script = 'libuv/SConscript.uv'
+uv_files = genv.SConscript(uv_script)
+lib_files += [uv_files]
+
 Return("lib_files")

@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+# uv lib building script
+#
+
+import os
+
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+env["BUILD_PLATFORM"] = genv["BUILD_PLATFORM"]
+
+env["CCFLAGS"] = [
+    "-std=gnu89",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter",
+    "-D_GNU_SOURCE",
+]
+
+dst = "uv"
+
+inc = [
+    ".",
+    "unix",
+    "../include",
+]
+
+src_unix = [
+    "unix/async.c",
+    "unix/atomic-ops.h",
+    "unix/core.c",
+    "unix/dl.c",
+    "unix/fs.c",
+    "unix/getaddrinfo.c",
+    "unix/getnameinfo.c",
+    "unix/internal.h",
+    "unix/loop.c",
+    "unix/loop-watcher.c",
+    "unix/pipe.c",
+    "unix/poll.c",
+    "unix/process.c",
+    "unix/signal.c",
+    "unix/spinlock.h",
+    "unix/stream.c",
+    "unix/tcp.c",
+    "unix/thread.c",
+    "unix/timer.c",
+    "unix/tty.c",
+    "unix/udp.c",
+]
+
+src_linux = [
+    "unix/linux-core.c",
+    "unix/linux-inotify.c",
+    "unix/linux-syscalls.c",
+    "unix/linux-syscalls.h",
+    "unix/proctitle.c",
+]
+
+src = [
+    # utils
+    "fs-poll.c",
+    "inet.c",
+    "threadpool.c",
+    "uv-common.c",
+    "version.c", 
+]
+
+src += src_unix
+src += src_linux
+
+lib = ["dl","pthread","rt"]
+
+uv_static = env.StaticLibrary(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("uv_static")
