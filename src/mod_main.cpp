@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "mod_loader.h"
 
+
 int mod_main_init(pstMOD_MAIN_PARA_T ppara)
 {
     stMOD_BASE_T* pbase = NULL;

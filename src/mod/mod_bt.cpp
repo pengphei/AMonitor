@@ -10,7 +10,7 @@
 /** @brief 示例模块初始化 */
 static int _bt_init(void* mod);
 /** @brief 示例模块控制 */
-static int _bt_ctrl(void* mod, uint32_t ctrl, void* data);
+static int _bt_ctrl(void* mod, char *jsonrpc, char *method, char *param, char *id);
 /** @brief 示例模块结束 */
 static int _bt_fini(void* mod);
 
@@ -29,9 +29,9 @@ static int _bt_init(void* mod)
     return 0;
 }
 
-static int _bt_ctrl(void* mod, uint32_t ctrl, void* data)
+static int _bt_ctrl(void* mod, char *jsonrpc, char *method, char *param, char *id)
 {
-    _BT_DEBUG("%s ctrl 0x%08x \n", __func__, ctrl);
+    _BT_DEBUG("%s method %s param: %s\n", __func__, method,  param);
     return 0;
 }
 

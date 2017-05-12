@@ -15,7 +15,7 @@ typedef int (*func_mod_init_t)(void* mod);
 /**
  * @brief 模块控制函数原型
  */
-typedef int (*func_mod_ctrl_t)(void* mod, uint32_t ctrl, void* data);
+typedef int (*func_mod_ctrl_t)(void* mod, char* jsonrpc, char* method, char* param, char* id);
 
 /**
  * @brief 模块销毁函数原型

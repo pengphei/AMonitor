@@ -43,6 +43,8 @@ dst = "amonitor" + genv["PROG_SUFFIX"]
 
 inc = [
     ".",
+    "../lib/cJSON",
+    "../lib/libuv/include",
 ]
 
 src = env.Glob("*.cpp")

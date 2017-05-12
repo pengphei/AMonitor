@@ -9,7 +9,7 @@
 /** @brief 示例模块初始化 */
 static int _uart_init(void* mod);
 /** @brief 示例模块控制 */
-static int _uart_ctrl(void* mod, uint32_t ctrl, void* data);
+static int _uart_ctrl(void* mod, char *jsonrpc, char *method, char *param, char *id);
 /** @brief 示例模块结束 */
 static int _uart_fini(void* mod);
 
@@ -28,9 +28,9 @@ static int _uart_init(void* mod)
     return 0;
 }
 
-static int _uart_ctrl(void* mod, uint32_t ctrl, void* data)
+static int _uart_ctrl(void* mod, char *jsonrpc, char *method, char *param, char *id)
 {
-    _UART_DEBUG("%s ctrl 0x%08x \n", __func__, ctrl);
+    _UART_DEBUG("%s method %s param: %s\n", __func__, method,  param);
     return 0;
 }
 
