@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+# libmqtt_mbed building script
+#
+
+import os
+from configobj import ConfigObj
+
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+env["BUILD_PLATFORM"] = genv["BUILD_PLATFORM"]
+
+IOTCfg = "make.settings"
+IOTEnv= ConfigObj(IOTCfg)
+
+env["CCFLAGS"] = [
+    "-g0",
+]
+
+dst = "mqtt_mbed"
+
+inc = [
+    "include",
+    "include/mqtt"
+    "common/inc",
+    "platform/"+IOTEnv["PLATFORM"]+"/inc",
+    "src/mqtt/MQTTClient-C/src",
+    "src/mqtt/MQTTPacket/src",
+]
+
+nettype_path = ""
+
+if IOTEnv["MBEDTLS_LIB_ENABLE"] == 'y':
+
+    inc += [
+        "public_libs/mbedtls",
+        "public_libs/mbedtls/include",
+        "public_libs/mbedtls/include/mbedtls",
+        "public_libs/mbedtls/configs/aliyun_iot",
+        "public_libs/mbedtls/configs/aliyun_iot/mbedtls",
+        "public_libs/porting/" + IOTEnv["SSL_LIB_NAME"],
+        "src/mqtt/MQTTPacket/nettype/tls",
+    ]
+    nettype_path = "src/mqtt/MQTTPacket/nettype/tls"
+else:
+    nettype_path = "src/mqtt/MQTTPacket/nettype/tcp"
+    inc += [
+        "src/mqtt/MQTTPacket/nettype/tcp",
+    ]
+
+if IOTEnv["CCP_LIB_ENABLE"] == 'y':
+    inc += ["include/ccp"]
+else:
+    inc += ["include/mqtt"]
+
+src_dirs = [
+    nettype_path,
+    "src/mqtt/MQTTClient-C/src",
+    "src/mqtt/MQTTPacket/src",
+]
+
+src = []
+
+for sdir in src_dirs:
+    src += env.Glob(sdir+"/*.c")
+
+lib = []
+
+mqtt_mbed_static = env.StaticLibrary(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("mqtt_mbed_static")

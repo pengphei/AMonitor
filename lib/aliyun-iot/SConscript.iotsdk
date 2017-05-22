@@ -1,0 +1,67 @@
+# -*- coding: utf-8 -*-
+# iotsdk building script
+#
+
+import os
+from configobj import ConfigObj
+
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+env["BUILD_PLATFORM"] = genv["BUILD_PLATFORM"]              
+
+IOTCfg = "make.settings"
+IOTEnv = ConfigObj(IOTCfg)
+
+print(IOTEnv["PLATFORM"])
+
+env["CCFLAGS"] = [
+    "-g0",
+]
+
+dst = "iotsdk"
+
+inc = [
+    "include",
+    "common/inc",
+    "platform/"+IOTEnv["PLATFORM"]+"/inc",
+    "src/mqtt/MQTTClient-C/src",
+]
+
+if IOTEnv["MBEDTLS_LIB_ENABLE"] == 'y':
+
+    inc += [
+        "public_libs/mbedtls/include",
+        "public_libs/mbedtls/include/mbedtls",
+        "public_libs/mbedtls/configs/aliyun_iot",
+        "public_libs/mbedtls/configs/aliyun_iot/mbedtls",
+    ]
+
+if IOTEnv["CCP_LIB_ENABLE"] == 'y':
+    inc += ["include/ccp"]
+else:
+    inc += ["include/mqtt"]
+
+src_dirs = [
+    "src",
+    "common/src",
+    "platform/" + IOTEnv["PLATFORM"] + "/src",
+]
+
+src = []
+
+for sdir in src_dirs:
+    src += env.Glob(sdir+"/*.c")
+
+lib = ["m"]
+
+iotsdk_static = env.StaticLibrary(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("iotsdk_static")

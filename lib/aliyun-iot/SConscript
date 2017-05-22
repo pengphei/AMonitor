@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+# lib building script
+#
+import os
+from configobj import ConfigObj
+
+Import('genv')
+
+lib_files = []
+
+IOTCfg = "make.settings"
+IOTEnv = ConfigObj(IOTCfg)
+print(IOTEnv["PLATFORM"])
+
+# iotsdk script
+iotsdk_script = 'SConscript.iotsdk'
+iotsdk_files = genv.SConscript(iotsdk_script)
+lib_files += [iotsdk_files]
+
+# mbedtls script
+#mbedtls_script = 'SConscript.mbedtls'
+#mbedtls_files = genv.SConscript(mbedtls_script)
+#lib_files += [mbedtls_files]
+
+# nanomsg script
+#mqtt_script = 'SConscript.mqtt'
+#mqtt_files = genv.SConscript(mqtt_script)
+#lib_files += [mqtt_files]
+
+Return("lib_files")

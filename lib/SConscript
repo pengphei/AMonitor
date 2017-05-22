@@ -26,4 +26,9 @@ uv_script = 'libuv/SConscript.uv'
 uv_files = genv.SConscript(uv_script)
 lib_files += [uv_files]
 
+# ali yun script
+ali_iot_script = 'aliyun-iot/SConscript'
+ali_iot_files = genv.SConscript(ali_iot_script)
+lib_files += [ali_iot_files]
+
 Return("lib_files")
